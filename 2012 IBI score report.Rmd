@@ -74,9 +74,22 @@ table(comb_2012_metric_scores$IBI
 comb_2012_metric_scores
 ```
 
-### Table of IBI scores
+### Table of IBI scores with edited column names
 
-```{r,message=F}
-datatable(comb_2012_metric_scores, rownames = F,  options= list(scrollX = TRUE, pageLength = nrow(comb_2012_metric_scores), dom='t'), selection = 'none') 
+```{r,message=F,warning=F}
+library(dplyr)
+ibi_table_select <- comb_2012_metric_scores %>% select(SITE,ntaxa,nept,nephem,pintol_urb,pchiron,pcling)
+datatable(ibi_table_select,rownames = F,  options= list(scrollX = TRUE, pageLength = nrow(ibi_table_select), dom='t'), selection = 'none',  
+          colnames = c('Site' = 'SITE', 'Number of taxa' = 'ntaxa',
+                                               'Number of EPT taxa'='nept','Number of Ephemeroptera taxa'='nephem',
+                                               'Percent intolerant urban taxa'='pintol_urb', 
+                                               'Percent Chironomidae'='pchiron','Percent Clinger'='pcling'),
+          caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table 1. Metric values and IBI scores from benthos sites collected in 2012 in Red Run')
+  )
+
 ```
+
+*Note: Percent Chironomidae are incorrectly calculated by the MBSStools package.*
 
